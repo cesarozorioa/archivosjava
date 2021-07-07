@@ -1,4 +1,3 @@
-
 package dominio;
 
 import java.io.FileInputStream;
@@ -9,9 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LeerArchivoBinario {
+
     ObjectInputStream entrada;
     FileInputStream archivo;
-    public void abrir(){
+
+    public void abrir() {
         try {
             archivo = new FileInputStream("binario.ser");
             entrada = new ObjectInputStream(archivo);
@@ -22,37 +23,41 @@ public class LeerArchivoBinario {
             Logger.getLogger(LeerArchivoBinario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void leer(){
-        Persona per=null;
-        String nombre;int edad;double estatura;
-        try{
-                    
-                per = (Persona)entrada.readObject();            
+
+    public void leer() {
+        Persona per = null;
+        String nombre;
+        int edad;
+        double estatura;
+        try {    
+            archivo = new FileInputStream("binario.ser");
+            while (archivo.available() > 0) {
+                entrada = new ObjectInputStream(archivo);
+                per = (Persona) entrada.readObject();
                 nombre = per.getNombre();
                 edad = per.getEdad();
                 estatura = per.getEstatura();
-                System.out.println("Nombre: "+nombre);
-                System.out.println("Edad: "+edad);
-                System.out.println("Estatura: "+estatura);
-            
-            } catch (IOException ex) {
+                System.out.println("Nombre: " + nombre);
+                System.out.println("Edad: " + edad);
+                System.out.println("Estatura: " + estatura);
+            }
+        } catch (IOException ex) {
             Logger.getLogger(LeerArchivoBinario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LeerArchivoBinario.class.getName()).log(Level.SEVERE, null, ex);
-        }         
+        }
+
     }
-         
-      
-    public void cerrar(){
-        if(entrada!=null){
+
+    public void cerrar() {
+        if (entrada != null) {
             try {
                 entrada.close();
             } catch (IOException ex) {
                 Logger.getLogger(LeerArchivoBinario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-    }
-        
+
     }
 
+}
